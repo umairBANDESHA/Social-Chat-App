@@ -1,0 +1,83 @@
+ import React, { useState, useEffect, useCallback, useContext } from 'react';
+ import { View, Text, StyleSheet } from 'react-native';
+ import { GiftedChat } from 'react-native-gifted-chat';
+ import { 
+     sendMessage,
+     fetchChatMessages,
+     fetchUser
+  } from '../Auth/database'; // Import your database functions
+ import { UserContext } from "../Auth/UserContext";
+
+ export default function ChatScreen({ route }) {
+     const friendId = route.params.friend;
+     const friend_id = friendId.user_id;
+   const [messages, setMessages] = useState([]);
+   const [user, setUser] = useState([]);
+   const { userId } = useContext(UserContext);
+ //   const userId = 4;
+ //   const ID = 3;
+
+   // Fetch messages when the component mounts
+   useEffect(() => {
+     const loadMessages = async () => {
+       try {
+         // console.log("friend id: "+JSON.stringify(friendId));
+         // console.log("iddd: "+JSON.stringify(friendId.user_id));
+         // const userData = await fetchUser(friendId);
+         // console.log( " dta"+ JSON.stringify(userData));
+         // setUser(userData);
+         const friend_id = friendId.user_id;
+         const chatMessages = await fetchChatMessages(userId, friendId);
+         // console.log( " msg: "+ JSON.stringify(chatMessages));
+         const formattedMessages = chatMessages.map((chat) => ({
+           _id: chat.id,
+           text: chat.message,
+           createdAt: new Date(chat.created_at),
+           user: {
+             _id: chat.sender_id,
+             name: friendId.name || 'User', 
+             avatar: friendId.profile_pic || null, 
+           },
+         }));
+         setMessages(formattedMessages);
+       } catch (error) {
+         console.error('Error loading messages:', error);
+       }
+     };
+
+     loadMessages();
+   }, [userId, friendId]);
+
+   // Handle sending messages
+   const onSend = useCallback(
+     async (newMessages = []) => {
+       const message = newMessages[0];
+       const { text, user } = message;
+
+       try {
+         // Save the message in the database
+        //  console.log('ID: '+ JSON.stringify(friendId));
+         await sendMessage(userId, friendId, text);
+
+         // Append the message to the chat
+         setMessages((previousMessages) =>
+           GiftedChat.append(previousMessages, newMessages)
+         );
+       } catch (error) {
+         console.error('Error sending message:', error);
+       }
+     },
+     [userId, friendId]
+   );
+
+   return (
+     <GiftedChat
+       messages={messages}
+       onSend={(messages) => onSend(messages)}
+       user={{
+           _id: userId, // Current user ID
+         }}
+         />
+        
+   );
+ }

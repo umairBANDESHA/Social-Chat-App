@@ -1,0 +1,31 @@
+{
+  "root": "F:\\AAA\\app",
+  "reactNativePath": "F:\\AAA\\app\\node_modules\\react-native",
+  "reactNativeVersion": "0.76",
+  "dependencies": {},
+  "commands": [
+    {
+      "name": "codegen",
+      "options": [
+        {
+          "name": "--path <path>",
+          "description": "Path to the React Native project root.",
+          "default": "F:\\AAA\\app"
+        },
+        {
+          "name": "--platform <string>",
+          "description": "Target platform. Supported values: \"android\", \"ios\", \"all\".",
+          "default": "all"
+        },
+        {
+          "name": "--outputPath <path>",
+          "description": "Path where generated artifacts will be output to."
+        }
+      ]
+    }
+  ],
+  "healthChecks": [],
+  "platforms": {},
+  "assets": [],
+  "project": {}
+}
