@@ -1,4 +1,12 @@
 # React Native Project Setup and Run Instructions
+   HiChat is a real-time chat app built with React Native that allows users to sign up, connect with friends,
+   and chat instantly. It features a clean, modern UI with smooth navigation and Firebase integration for 
+   authentication and live messaging. Designed for fast and secure communication across devices.
+
+# Screenshot
+
+<img width="1536" height="1024" alt="hichat" src="https://github.com/user-attachments/assets/f21a7ed6-0704-4622-893f-ea2345d138a1" />
+
 
 ## Prerequisites
 - Node.js (Recommended: LTS version)
@@ -35,11 +43,5 @@
   npx react-native doctor
   ```
   Follow the instructions to resolve any issues.
-
-## Additional Notes
-- For iOS, you need a Mac and Xcode installed. Use `npx react-native run-ios`.
-- For more help, see the [React Native documentation](https://reactnative.dev/docs/environment-setup).
-
----
 
 Feel free to update this README with project-specific details as needed.
